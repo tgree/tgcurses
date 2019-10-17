@@ -7,6 +7,6 @@
 *.out
 *.pyc
 /build/
-/bin/
-/tests/
+/dist/
+/*.egg-info/
 tags
