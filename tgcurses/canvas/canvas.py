@@ -112,6 +112,12 @@ class Canvas(object):
         '''
         self._cwin.erase()
 
+    def clear(self):
+        '''
+        Seems to do the same thing as erase().
+        '''
+        self._cwin.clear()
+
     def move(self, y, x):
         '''
         Moves the cursor to the specified position in canvas coordinates.
@@ -195,3 +201,32 @@ class Canvas(object):
         contents will scroll down instead.
         '''
         self._cwin.scroll(dy)
+
+    def attron(self, attr):
+        '''
+        Enables the specified curses attribute for the background character.
+        '''
+        self._cwin.attron(attr)
+
+    def attroff(self, attr):
+        '''
+        Disables the specified curses attribute for the background character.
+        '''
+        self._cwin.attroff(attr)
+
+    def bkgd(self, ch, attr=None):
+        '''
+        Sets the background character to ch and applies the optional attr
+        parameter.  The background is then repainted.
+        '''
+        if attr is not None:
+            self._cwin.bkgd(ch, attr)
+        else:
+            self._cwin.bkgd(ch)
+
+    def clrline(self, y):
+        '''
+        Clears the entire line at the specified y coordinate.
+        '''
+        self.move(y, 0)
+        self._cwin.clrtoeol()
