@@ -3,6 +3,7 @@ import curses
 from .window import Window
 from .workspace import Workspace
 from .menu import Menu
+from .edit_field import EditField
 
 
 def doupdate():
