@@ -1,7 +1,5 @@
 import curses
 
-from ..layout import StaticFrame
-
 
 class Window(object):
     '''
