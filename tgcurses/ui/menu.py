@@ -15,7 +15,7 @@ class Menu(object):
         self.window.content.noutrefresh()
 
     def draw(self):
-        for i in xrange(len(self.items)):
+        for i in range(len(self.items)):
             self.draw_item(i)
 
     def select(self, index):
