@@ -2,15 +2,20 @@ import curses
 
 
 class Menu(object):
-    def __init__(self, window, items, selection=0):
+    def __init__(self, window, items, selection=0, checked=None):
         self.window    = window
         self.items     = items
         self.selection = selection
+        self.checked   = set(checked) if checked is not None else None
         self.draw()
 
     def draw_item(self, index):
+        if self.checked is not None:
+            chk = '[%c] ' % ('x' if index in self.checked else ' ')
+        else:
+            chk = ''
         attr = curses.A_REVERSE if index == self.selection else 0
-        s    = '%-*s' % (self.window.content.width, self.items[index])
+        s    = '%-*s' % (self.window.content.width, chk + self.items[index])
         self.window.content.addstr(s, pos=(index, 0), attr=attr)
         self.window.content.noutrefresh()
 
@@ -31,3 +36,15 @@ class Menu(object):
     def select_prev(self):
         if self.selection - 1 >= 0:
             self.select(self.selection - 1)
+
+    def check_item(self, index):
+        self.checked.add(index)
+
+    def uncheck_item(self, index):
+        self.checked.discard(index)
+
+    def toggle_item(self, index):
+        if index in self.checked:
+            self.checked.discard(index)
+        else:
+            self.checked.add(index)
