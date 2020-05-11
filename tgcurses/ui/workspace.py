@@ -35,7 +35,7 @@ class Workspace(object):
         f = self.canvas.make_sub_frame(b)
         return self.make_window(title, f)
 
-    def make_anchored_window(self, title, **kwargs):
+    def make_anchored_window(self, title, h=None, w=None, **kwargs):
         '''
         Return a new Window on the same screen using a new Frame with the
         given anchor points.  This is syntactic sugar for:
@@ -43,7 +43,7 @@ class Workspace(object):
             f = Frame(workspace.canvas, **kwargs)
             w = Window(workspace.canvas, f)
         '''
-        f = Frame(**kwargs)
+        f = Frame(height=h, width=w, **kwargs)
         return self.make_window(title, f)
 
     def make_edge_window(self, title, h=None, w=None):
@@ -77,4 +77,4 @@ class Workspace(object):
                                          right_anchor=r,
                                          top_anchor=t,
                                          bottom_anchor=b,
-                                         width=w, height=h)
+                                         w=w, h=h)
