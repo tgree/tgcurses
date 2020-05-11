@@ -24,7 +24,7 @@ def main(screen):
     check_win.menu = tgcurses.ui.Menu(
                     check_win,
                     ['Alpha', 'Beta', 'Gamma', 'Delta'],
-                    checked=[])
+                    checked=[2])
     check_win.content.timeout(100)
     check_win.content.keypad(1)
 
