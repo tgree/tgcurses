@@ -14,12 +14,14 @@ class Window(object):
         self.border    = workspace.make_canvas(frame)
         self.content   = workspace.make_canvas(frame.make_inset_frame(1, 1))
         self.hilited   = False
+        self.visible   = False
         self.show()
 
     def hide(self):
         '''
         Removes the window and border from the screen on the next update.
         '''
+        self.visible = False
         self.border.erase()
         self.border.noutrefresh()
 
@@ -27,6 +29,7 @@ class Window(object):
         '''
         Displays the window and border on the next update.
         '''
+        self.visible = True
         max_title_width = self.frame.bounds.width - 4
         if len(self.title) > max_title_width:
             self.display_title = self.title[:max_title_width - 1] + u'\u2026'

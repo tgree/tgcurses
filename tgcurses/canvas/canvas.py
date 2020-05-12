@@ -153,6 +153,16 @@ class Canvas(object):
             else:
                 self._cwin.addch(ch)
 
+    def addchs(self, chs, pos=None, attr=None):
+        '''
+        Draws the character sequence (specified as an array of integers and not
+        a character-string) at the specified position.
+        '''
+        if pos is not None:
+            self.move(pos[0], pos[1])
+        for c in chs:
+            self.addch(c, attr=attr)
+
     def addstr(self, text, pos=None, attr=None):
         '''
         Draws the specified text in the canvas.  Is pos is specified, it can be
