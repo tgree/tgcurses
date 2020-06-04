@@ -27,7 +27,11 @@ class Menu(object):
     def select_next(self):
         if self.selection + 1 < len(self.items):
             self.select(self.selection + 1)
+            return True
+        return False
 
     def select_prev(self):
         if self.selection - 1 >= 0:
             self.select(self.selection - 1)
+            return True
+        return False
