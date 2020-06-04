@@ -240,3 +240,10 @@ class Canvas(object):
         '''
         self.move(y, 0)
         self._cwin.clrtoeol()
+
+    def hline(self, n, ch=None, pos=None):
+        ch = curses.ACS_HLINE if ch is None else ch
+        if pos is not None:
+            self._cwin.hline(pos[0], pos[1], ch, n)
+        else:
+            self._cwin.hline(ch, n)
