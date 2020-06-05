@@ -5,21 +5,21 @@ PACKAGES := tgcurses/*.py \
 		    tgcurses/ui/*.py
 
 .PHONY: all
-all: tgcurses3
+all: tgcurses
 
 .PHONY: clean
 clean:
 	rm -rf dist tgcurses.egg-info build
 
-.PHONY: tgcurses3
-tgcurses3: dist/tgcurses-$(VERSION)-py3-none-any.whl
+.PHONY: tgcurses
+tgcurses: dist/tgcurses-$(VERSION)-py3-none-any.whl
 
-.PHONY: install3
-install3: tgcurses3
+.PHONY: install
+install: tgcurses
 	sudo pip3 install --force-reinstall dist/tgcurses-$(VERSION)-py3-none-any.whl
 
-.PHONY: uninstall3
-uninstall3:
+.PHONY: uninstall
+uninstall:
 	sudo pip3 uninstall tgcurses
 
 dist/tgcurses-$(VERSION)-py3-none-any.whl: setup.py setup.cfg $(PACKAGES)
