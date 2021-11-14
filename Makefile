@@ -3,6 +3,7 @@ PACKAGES := tgcurses/*.py \
 		    tgcurses/canvas/*.py \
 		    tgcurses/layout/*.py \
 		    tgcurses/ui/*.py
+PYTHON := python3
 
 .PHONY: all
 all: tgcurses
@@ -16,11 +17,11 @@ tgcurses: dist/tgcurses-$(VERSION)-py3-none-any.whl
 
 .PHONY: install
 install: tgcurses
-	sudo pip3 install --force-reinstall dist/tgcurses-$(VERSION)-py3-none-any.whl
+	sudo $(PYTHON) -m pip install --force-reinstall dist/tgcurses-$(VERSION)-py3-none-any.whl
 
 .PHONY: uninstall
 uninstall:
-	sudo pip3 uninstall tgcurses
+	sudo $(PYTHON) -m pip uninstall tgcurses
 
 dist/tgcurses-$(VERSION)-py3-none-any.whl: setup.py setup.cfg $(PACKAGES)
-	python3 setup.py sdist bdist_wheel
+	$(PYTHON) setup.py sdist bdist_wheel
