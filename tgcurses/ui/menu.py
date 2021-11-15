@@ -1,4 +1,5 @@
 import curses
+import _curses
 
 
 class MenuItem(object):
@@ -33,12 +34,30 @@ class Menu(object):
         else:
             self.items = [MenuItem(n) for n in items]
         self.selection = selection
+        self.top       = 0
         self.draw()
 
     def draw_item(self, index):
+        rows = self.window.content.height
+        if index < self.top or index >= self.top + rows:
+            return
+
+        row  = index - self.top
         attr = curses.A_REVERSE if index == self.selection else 0
-        s    = '%-*s' % (self.window.content.width, self.items[index])
-        self.window.content.addstr(s, pos=(index, 0), attr=attr)
+        if self.top > 0 and row == 0:
+            s = '%-*s\u2191' % (self.window.content.width - 1,
+                                self.items[index])
+            s.encode('utf-8')
+        elif self.top + rows < len(self.items) and row == rows - 1:
+            s = '%-*s\u2193' % (self.window.content.width - 1,
+                                self.items[index])
+            s.encode('utf-8')
+        else:
+            s = '%-*s' % (self.window.content.width, self.items[index])
+        try:
+            self.window.content.addstr(s, pos=(row, 0), attr=attr)
+        except _curses.error as e:
+            pass
         self.window.content.noutrefresh()
 
     def draw(self):
@@ -46,10 +65,18 @@ class Menu(object):
             self.draw_item(i)
 
     def select(self, index):
+        rows           = self.window.content.height
         prev_selection = self.selection
         self.selection = index
-        self.draw_item(prev_selection)
-        self.draw_item(self.selection)
+        if index < self.top:
+            self.top = index
+            self.draw()
+        elif index >= self.top + rows:
+            self.top = index - rows + 1
+            self.draw()
+        else:
+            self.draw_item(prev_selection)
+            self.draw_item(self.selection)
 
     def select_next(self):
         if self.selection + 1 < len(self.items):
