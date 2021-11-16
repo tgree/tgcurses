@@ -33,8 +33,9 @@ class Menu(object):
                           for i, n in enumerate(items)]
         else:
             self.items = [MenuItem(n) for n in items]
-        self.selection = selection
-        self.top       = 0
+        self.selection   = selection
+        self.top         = 0
+        self.hilite_attr = curses.A_REVERSE
         self.draw()
 
     def draw_item(self, index):
@@ -43,7 +44,7 @@ class Menu(object):
             return
 
         row  = index - self.top
-        attr = curses.A_REVERSE if index == self.selection else 0
+        attr = self.hilite_attr if index == self.selection else 0
         if self.top > 0 and row == 0:
             s = '%-*s\u2191' % (self.window.content.width - 1,
                                 self.items[index])
